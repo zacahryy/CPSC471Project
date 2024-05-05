@@ -1,15 +1,39 @@
 #CLIENT CODE
 from socket import *
+import sys
+import os
 
 #Name and port number of server
 #Need to write a get function for server name and port
-serverName = ecs.fullerton.edu
-serverPort = 12000
+def receive(socket, numBytes):
+    data = ''
+    tmpBuff = ''
+
+    while len(data) < numBytes:
+        tmpBuff = socket.recv(numBytes)
+
+        if not tmpBuff:
+            break
+
+        data += tmpBuff
+
+    return data
+
+serverName = sys.argv[1]
+serverPort = sys.argv[2]
 
 clientSocket = socket(AF_INET, SOCK_STREAM)
+clientSocket.connect((serverName, int(serverPort)))
 
-data = "Hello World!"
+while 1:
+    cmdInput = input("ftp> ")
 
-while bytesSent != len(data):
-    bytesSent = clientSocket.send(data[bytesSent:])
-    clientSocket.close()
+    if(cmdInput[0:2] == 'ls'):
+        clientSocket.send('ls'.encode())
+
+        size = receive(clientSocket, 10)
+
+        print(receive(clientSocket, size))
+
+
+clientSocket.close()
