@@ -41,10 +41,10 @@ while 1:
         try:
             dirList = os.listdir()
             outputData = "".join([i + "\n" for i in dirList])
-            connectionSocket.send(bytes(outputData))
+            connectionSocket.send(bytes(outputData, encoding='utf8'))
         except Exception as e:
             errorMsg = str(e)
-            connectionSocket.send(bytes(errorMsg))
+            connectionSocket.send(bytes(errorMsg, encoding='utf8'))
     
         print("working")
 

@@ -15,7 +15,7 @@ def receive(socket, numBytes):
         if not tmpBuff:
             break
 
-        data += tmpBuff
+        data += str(tmpBuff)
 
     return data
 
@@ -33,7 +33,14 @@ while 1:
 
         size = receive(clientSocket, 10)
 
-        print(receive(clientSocket, size))
+        #error testing
+        print(size)
+        print(type(size))
+        print(size.encode())
+        print(int.from_bytes(size.encode(), "big"))
+
+        #line with error
+        print(receive(clientSocket, int.from_bytes(size.encode(), "big")))
 
 
 clientSocket.close()
