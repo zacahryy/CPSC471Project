@@ -38,16 +38,16 @@ while 1:
     print("Client connected from:",addr)
     print("\n")
 
-    Data = connectionSocket.recv(1024).decode
-    elif Data =='quit':
-        break
-    elif Data =='GET':
-        data = get()
-        conn.sendall(data.encode())
-    elif Data.startswith('PUT'):
-        put(conn,Data)
-    elif Data.startswith('ls'):
-        listDir(conn,Data)
+    data = connectionSocket.recv(1024).decode
+    elif data == "quit":
+        quit()
+    elif data =="GET":
+       get()
+    elif data == "PUT":
+        put()
+    elif data == "ls":
+        listDir()
+     conn.sendall(data.encode())
 
     if(data[0:2] == 'ls'):
         try:
@@ -60,11 +60,29 @@ while 1:
     
         print("working")
 
+def listDir():
+    with os.scandir() as items:
+        res =''
+        totalSize=0
+        for item in items:
+            if item.is_file():
+                size = item.stat().st_size
+                res += f'{item.name} \t {size}b \n'
+                totalSize +=size
+            elif item.is_dir():
+                res += f'> {item.name} \n'
+        res += f'total size: {totalSize}b \n'
+        return res
 
 
 
-
-
+def quit():
+    # Send quit conformation
+    connectionSocket.send("1")
+    # Close and restart the server
+  connectionSocket.close()  
+    serverSocket.close()
+    os.execl(sys.executable, sys.executable, *sys.argv)
         
-connectionSocket.close()
+
 
