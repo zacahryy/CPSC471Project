@@ -2,6 +2,7 @@
 from socket import *
 import sys
 import os
+import random
 
 #Get port num
 serverPort = int(sys.argv[1])
@@ -90,7 +91,35 @@ def get(connectionSocket,data):
         else:
             connectionSocket.sendall('Bad Request'.encode())    
         
-
+def put(connectionSocket, data):
+    # Extract the filename from the command
+    fileName = data[5:].strip()  # Assuming the command format is "put <file name>"
+    
+    # Check if the file exists in the current directory
+    if os.path.isfile(fileName):
+        # Send a confirmation message to the client
+        connectionSocket.sendall("READY".encode())
+        
+        # Receive a port number for data transfer from the client
+        dataPort = int(connectionSocket.recv(1024).decode())
+        
+        # Create a new socket for data transfer
+        dataSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        dataSocket.connect(('', dataPort))  # Connect to the client's data port
+        
+        # Open the file and send its contents over the data socket
+        with open(fileName, 'rb') as file:
+            fileData = file.read()
+            dataSocket.sendall(fileData)
+        
+        # Close the data socket after sending the file
+        dataSocket.close()
+        
+        # Send a success message to the client
+        connectionSocket.sendall(f"File '{fileName}' uploaded successfully".encode())
+    else:
+        # Send an error message if the file doesn't exist
+        connectionSocket.sendall(f"File '{fileName}' not found".encode())
 
 
 def listDir():
