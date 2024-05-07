@@ -13,6 +13,9 @@ serverSocket.bind(('', serverPort))
 serverSocket.listen(1) #Max num of clients
 print("Server is ready to receive on port", serverPort)
 
+
+
+
 def receive(socket, numBytes):
     data = ''
     tmpBuff = ''
@@ -35,7 +38,16 @@ while 1:
     print("Client connected from:",addr)
     print("\n")
 
-    data = connectionSocket.recv(1024).decode()
+    Data = connectionSocket.recv(1024).decode
+    elif Data =='quit':
+        break
+    elif Data =='GET':
+        data = get()
+        conn.sendall(data.encode())
+    elif Data.startswith('PUT'):
+        put(conn,Data)
+    elif Data.startswith('ls'):
+        listDir(conn,Data)
 
     if(data[0:2] == 'ls'):
         try:
