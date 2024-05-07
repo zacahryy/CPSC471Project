@@ -45,7 +45,7 @@ while 1:
     elif data =="get":
        get(connectionSocket, data)
     elif data == "put":
-        put()
+        put(connectionSocket, data)
     elif data == "ls":
         listDir()
      conn.sendall(data.encode())
