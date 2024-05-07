@@ -32,24 +32,6 @@ def receive(socket, numBytes):
     return data
 
 
-while 1:
-    print("Waiting for connection...")
-    print("\n")
-    connectionSocket, addr = serverSocket.accept()
-    print("Client connected from:",addr)
-    print("\n")
-
-    data = connectionSocket.recv(1024).decode
-    elif data == "quit":
-        quit()
-    elif data =="get":
-       get(connectionSocket, data)
-    elif data == "put":
-        put(connectionSocket, data)
-    elif data == "ls":
-        listDir()
-     conn.sendall(data.encode())
-
     if(data[0:2] == 'ls'):
         try:
             dirList = os.listdir()
@@ -145,6 +127,26 @@ def quit():
   connectionSocket.close()  
     serverSocket.close()
     os.execl(sys.executable, sys.executable, *sys.argv)
+
+
+while 1:
+    print("Waiting for connection...")
+    print("\n")
+    connectionSocket, addr = serverSocket.accept()
+    print("Client connected from:",addr)
+    print("\n")
+
+    data = connectionSocket.recv(1024).decode
+    
+    elif data =="get":
+       get(connectionSocket, data)
+    elif data == "put":
+        put(connectionSocket, data)
+    elif data == "ls":
+        listDir()
+    elif data == "quit":
+        quit()
+     conn.sendall(data.encode())
         
 
 
