@@ -42,5 +42,5 @@ while 1:
         #line with error
         print(receive(clientSocket, int.from_bytes(size.encode(), "big")))
 
-
+    data = clientSocket.recv(1024).decode()
 clientSocket.close()
