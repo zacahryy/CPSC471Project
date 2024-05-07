@@ -41,9 +41,9 @@ while 1:
     data = connectionSocket.recv(1024).decode
     elif data == "quit":
         quit()
-    elif data =="GET":
-       get()
-    elif data == "PUT":
+    elif data =="get":
+       get(connectionSocket, data)
+    elif data == "put":
         put()
     elif data == "ls":
         listDir()
@@ -59,6 +59,39 @@ while 1:
             connectionSocket.send(bytes(errorMsg, encoding='utf8'))
     
         print("working")
+
+# a function that downloads a file or image from server 
+# and save it in current directory
+def get(connectionSocket,data):
+    found = 0
+    path = os.getcwd()
+    fileName = data[5:]
+    print('fileName: '+fileName)
+    if 'main' in path:
+        print('fileName: '+fileName)
+        items = os.scandir()
+        for item in items:
+            print(item.name)
+            if fileName == item.name:
+                found = 1
+                break
+        if found:
+            #generate random port number between 3000 & 50000
+            portRandom =random.randrange(3000,50000)
+            connectionSocket.sendall(str(portRandom).encode())
+            dwldSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            dwldSocket.bind(('',portRandom))
+            dwldSocket.listen()
+            connectionSocket2 , addr = dwldSocket.accept() #Wait for an incoming connection. Return a new socket representing the connection, and the address of the client.
+            with open(fileName,'rb') as saveFile:
+                connectionSocket2.sendall(saveFile.read())
+                saveFile.close()
+                connectionSocket2.close()
+        else:
+            connectionSocket.sendall('Bad Request'.encode())    
+        
+
+
 
 def listDir():
     with os.scandir() as items:
