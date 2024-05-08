@@ -3,38 +3,37 @@ from socket import *
 import sys
 import os
 
-#Name and port number of server
-#Need to write a get function for server name and port
-def receive(socket, numBytes):
-    data = ''
-    tmpBuff = ''
-
-    while len(data) < numBytes:
-        tmpBuff = socket.recv(numBytes)
-
-        if not tmpBuff:
+try:
+  serverName = input (" Enter the server name:")
+    serverPort = input ("Enter the server port:")
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+    client.connect((serverNameT, serverPort)) #Connect to the server running on localhost
+    
+while True:
+        command = input("ftp > ")
+        if(command=="GET"):
+            client.send(command.encode())
             break
+        else:
+            print("Invaid comand")
 
-        data += str(tmpBuff)
-
-    return data
-
-serverName = sys.argv[1]
-serverPort = int(sys.argv[2])
-file_name = sys.argv[3]
-
-clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-clientSocket.connect((serverName, int(serverPort)))
-     while True:
-        command = input('ftp> (e.g., GET filename, PUT filename, ls, quit): ')
-        if command.lower() == 'quit':
-            clientSocket.sendall(command.encode())
+    #Data buffer
+    data = ""
+    while True:
+        received_data = client.recv(6).decode() #Receive the data sent by the client
+        if "<EOF>" in received_data:
             break
+        data = data+received_data
 
-        download_file(clientSocket, command)
+    with open(DOWNLOAD_FILE_PATH, "w") as file:
+        file.write(data)
+        print("Download successful")
+    
 
+except Exception as e:
+    print("Connection terminated!")
+    print(e)
 
-while 1:
     if 
         clientSocket2 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         clientSocket2.connect((serverName,int(Data)))
