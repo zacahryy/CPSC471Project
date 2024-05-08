@@ -26,7 +26,6 @@ clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, int(serverPort)))
 
 while 1:
-  while True:
     cmdInput = input("ftp> ")
 
     if cmdInput.startswith('ls'):
