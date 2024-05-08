@@ -20,12 +20,12 @@ def main():
         response = clientSocket.recv(1024)
 
         # Handle server response based on command
-        if command.startswith("GET ") and not response.startswith(b"File not found"):
+        if command.startswith("GET") and not response.startswith(b"File not found"):
             filename = command.split()[1]
             with open(filename, 'wb') as file:
                 file.write(response)
                 print("File", filename, "downloaded successfully")
-        elif command.startswith("PUT ") and response.startswith(b"File uploaded successfully"):
+        elif command.startswith("PUT") and response.startswith(b"File uploaded successfully"):
             print("File uploaded successfully")
         elif command == "ls":
             print(response.decode())
