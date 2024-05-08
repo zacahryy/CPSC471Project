@@ -31,115 +31,45 @@ def receive(socket, numBytes):
 
     return data
 
+# Function to handle file downloads (GET command)
+def get(filename, connectionSocket):
+    try:
+        with open(filename, 'rb') as file:
+            data = file.read()
+            connectionSocket.sendall(data)
+    except FileNotFoundError:
+        connectionSocket.send(b"File not found")
 
-    if(data[0:2] == 'ls'):
-        try:
-            dirList = os.listdir()
-            outputData = "".join([i + "\n" for i in dirList])
-            connectionSocket.send(bytes(outputData, encoding='utf8'))
-        except Exception as e:
-            errorMsg = str(e)
-            connectionSocket.send(bytes(errorMsg, encoding='utf8'))
-    
-        print("working")
+# Function to handle file uploads (PUT command)
+def put(filename, data, connectionSocket):
+    try:
+        with open(filename, 'wb') as file:
+            file.write(data)
+            connectionSocket.send(b"File uploaded successfully")
+    except Exception as e:
+        connectionSocket.send(bytes(str(e), encoding='utf8'))
 
-# a function that downloads a file or image from server 
-# and save it in current directory
-def get(connectionSocket,data):
-    found = 0
-    path = os.getcwd()
-    fileName = data[5:]
-    print('fileName: '+fileName)
-    if 'main' in path:
-        print('fileName: '+fileName)
-        items = os.scandir()
-        for item in items:
-            print(item.name)
-            if fileName == item.name:
-                found = 1
-                break
-        if found:
-            #generate random port number between 3000 & 50000
-            portRandom =random.randrange(3000,50000)
-            connectionSocket.sendall(str(portRandom).encode())
-            dwldSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            dwldSocket.bind(('',portRandom))
-            dwldSocket.listen()
-            connectionSocket2 , addr = dwldSocket.accept() #Wait for an incoming connection. Return a new socket representing the connection, and the address of the client.
-            with open(fileName,'rb') as saveFile:
-                connectionSocket2.sendall(saveFile.read())
-                saveFile.close()
-                connectionSocket2.close()
-        else:
-            connectionSocket.sendall('Bad Request'.encode())    
-        
-def put(connectionSocket, data):
-    # Extract the filename from the command
-    fileName = data[5:].strip()  # Assuming the command format is "put <file name>"
-    
-    # Check if the file exists in the current directory
-    if os.path.isfile(fileName):
-        # Send a confirmation message to the client
-        connectionSocket.sendall("READY".encode())
-        
-        # Receive a port number for data transfer from the client
-        dataPort = int(connectionSocket.recv(1024).decode())
-        
-        # Create a new socket for data transfer
-        dataSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        dataSocket.connect(('', dataPort))  # Connect to the client's data port
-        
-        # Open the file and send its contents over the data socket
-        with open(fileName, 'rb') as file:
-            fileData = file.read()
-            dataSocket.sendall(fileData)
-        
-        # Close the data socket after sending the file
-        dataSocket.close()
-        
-        # Send a success message to the client
-        connectionSocket.sendall(f"File '{fileName}' uploaded successfully".encode())
-    else:
-        # Send an error message if the file doesn't exist
-        connectionSocket.sendall(f"File '{fileName}' not found".encode())
-
-
-def listDir():
-    with os.scandir() as items:
-        res =''
-        totalSize=0
-        for item in items:
-            if item.is_file():
-                size = item.stat().st_size
-                res += f'{item.name} \t {size}b \n'
-                totalSize +=size
-            elif item.is_dir():
-                res += f'> {item.name} \n'
-        res += f'total size: {totalSize}b \n'
-        return res
-
-
-
-def quit():
-    # Send quit conformation
-    connectionSocket.send("1")
-    # Close and restart the server
-  connectionSocket.close()  
+# Function to handle client disconnect and server shutdown (QUIT command)
+def quit(connectionSocket, serverSocket):
+    connectionSocket.close()
     serverSocket.close()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-
 # Handle client commands
-def handle_client_command(data, connectionSocket):
-    if data == "quit":
-        quit(connectionSocket)
-    elif data == "GET":
-        get()
-    elif data == "PUT":
-        put()
+def handle_client_command(data, connectionSocket, serverSocket):
+    if data.startswith("GET "):
+        filename = data.split()[1]
+        get(filename, connectionSocket)
+    elif data.startswith("PUT "):
+        parts = data.split(maxsplit=2)
+        filename = parts[1]
+        file_data = parts[2].encode('utf-8')
+        put(filename, file_data, connectionSocket)
     elif data == "ls":
         dir_listing = listDir()
         connectionSocket.send(bytes(dir_listing, encoding='utf8'))
+    elif data == "quit":
+        quit(connectionSocket, serverSocket)
     else:
         connectionSocket.send(b"Invalid command")
 
