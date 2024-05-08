@@ -13,6 +13,12 @@ serverSocket.bind(('', serverPort))
 serverSocket.listen(1) #Max num of clients
 print("Server is ready to receive on port", serverPort)
 
+print("Waiting for connection...")
+print("\n")
+connectionSocket, addr = serverSocket.accept()
+print("Client connected from:",addr)
+print("\n")
+
 
 def receive(socket, numBytes):
     data = ''
@@ -75,12 +81,7 @@ def handle_client_command(data, connectionSocket, serverSocket):
 
 # Inside your while loop where you handle client connections
 while 1:
-    # Accept client connection and receive data
-    print("Waiting for connection...")
-    print("\n")
-    connectionSocket, addr = serverSocket.accept()
-    print("Client connected from:",addr)
-    print("\n")
+    # Receive data
     data = connectionSocket.recv(1024).decode()
 
     # Handle client command
