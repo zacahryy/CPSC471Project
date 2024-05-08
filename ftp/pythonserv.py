@@ -129,24 +129,31 @@ def quit():
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
+# Handle client commands
+def handle_client_command(data, connectionSocket):
+    if data == "quit":
+        quit(connectionSocket)
+    elif data == "GET":
+        get()
+    elif data == "PUT":
+        put()
+    elif data == "ls":
+        dir_listing = listDir()
+        connectionSocket.send(bytes(dir_listing, encoding='utf8'))
+    else:
+        connectionSocket.send(b"Invalid command")
+
+# Inside your while loop where you handle client connections
 while 1:
+    # Accept client connection and receive data
     print("Waiting for connection...")
     print("\n")
-    connectionSocket, addr = serverSocket.accept()
+    connectionSocket, addr = serverSocket.accept
     print("Client connected from:",addr)
     print("\n")
+    data = connectionSocket.recv(1024).decode()
 
-    data = connectionSocket.recv(1024).decode
-    
-    elif data =="get":
-       get(connectionSocket, data)
-    elif data == "put":
-        put(connectionSocket, data)
-    elif data == "ls":
-        listDir()
-    elif data == "quit":
-        quit()
-     conn.sendall(data.encode())
-        
+    # Handle client command
+    handle_client_command(data, connectionSocket)
 
 
