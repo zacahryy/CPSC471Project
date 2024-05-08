@@ -56,10 +56,10 @@ def quit(connectionSocket, serverSocket):
 
 # Handle client commands
 def handle_client_command(data, connectionSocket, serverSocket):
-    if data.startswith("GET "):
+    if data.startswith("GET"):
         filename = data.split()[1]
         get(filename, connectionSocket)
-    elif data.startswith("PUT "):
+    elif data.startswith("PUT"):
         parts = data.split(maxsplit=2)
         filename = parts[1]
         file_data = parts[2].encode('utf-8')
