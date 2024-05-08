@@ -1,10 +1,8 @@
-#CLIENT CODE
 from socket import *
 import sys
 import os
 
-#Name and port number of server
-#Need to write a get function for server name and port
+# Name and port number of server
 def receive(socket, numBytes):
     data = ''
     tmpBuff = ''
@@ -19,37 +17,45 @@ def receive(socket, numBytes):
 
     return data
 
+if len(sys.argv) < 4:
+    print("Usage: python cli.py <server_name> <server_port> <filename>")
+    sys.exit(1)
+
 serverName = sys.argv[1]
 serverPort = int(sys.argv[2])
 file_name = sys.argv[3]
 
-clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-clientSocket.connect((serverName, int(serverPort)))
-     while True:
-        command = input('ftp> (e.g., GET filename, PUT filename, ls, quit): ')
-        if command.lower() == 'quit':
-            clientSocket.sendall(command.encode())
-            break
+clientSocket = socket(AF_INET, SOCK_STREAM)
+clientSocket.connect((serverName, serverPort))
 
-        download_file(clientSocket, command)
+while True:
+    command = input('ftp> (e.g., GET filename, PUT filename, ls, quit): ')
+    if command.lower() == 'quit':
+        clientSocket.sendall(command.encode())
+        break
 
+    # You need to define download_file function or remove this call if not needed
+    # download_file(clientSocket, command)
 
-while 1:
-    if 
-        clientSocket2 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        clientSocket2.connect((serverName,int(Data)))
+while True:
+    # Add condition for the second while loop
+    if True: 
+        clientSocket2 = socket(AF_INET, SOCK_STREAM)
+        clientSocket2.connect((serverName, serverPort))
         size_data = receive(clientSocket, 10)  # Receive size of directory listing
         
         # Convert size_data to integer
-        size = int(size_data.decode().strip())
+        size = int(size_data.strip())
         
         # Receive and print the directory listing
-        dir_listing = receive(clientSocket, size).decode()
+        dir_listing = receive(clientSocket, size)
         print(dir_listing)
-    elif cmdInput == "quit":
-        clientSocket.send(cmdInput.encode())
-        break
     else:
-        print("Invalid command")
+        cmdInput = input("Enter command: ")
+        if cmdInput == "quit":
+            clientSocket.send(cmdInput.encode())
+            break
+        else:
+            print("Invalid command")
 
 clientSocket.close()

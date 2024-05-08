@@ -77,7 +77,7 @@ while 1:
     # Accept client connection and receive data
     print("Waiting for connection...")
     print("\n")
-    connectionSocket, addr = serverSocket.accept
+    connectionSocket, addr = serverSocket.accept()
     print("Client connected from:",addr)
     print("\n")
     data = connectionSocket.recv(1024).decode()
