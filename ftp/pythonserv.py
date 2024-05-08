@@ -52,7 +52,8 @@ def put(filename, data, connectionSocket):
 def quit(connectionSocket, serverSocket):
     connectionSocket.close()
     serverSocket.close()
-    os.execl(sys.executable, sys.executable, *sys.argv)
+    print("Server shutting down...")
+    sys.exit(0)
 
 # Handle client commands
 def handle_client_command(data, connectionSocket, serverSocket):
