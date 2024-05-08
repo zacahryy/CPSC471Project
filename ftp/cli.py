@@ -26,21 +26,24 @@ clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, int(serverPort)))
 
 while 1:
+  while True:
     cmdInput = input("ftp> ")
 
-    if(cmdInput[0:2] == 'ls'):
+    if cmdInput.startswith('ls'):
         clientSocket.send('ls'.encode())
+        
+        size_data = receive(clientSocket, 10)  # Receive size of directory listing
+        
+        # Convert size_data to integer
+        size = int(size_data.decode().strip())
+        
+        # Receive and print the directory listing
+        dir_listing = receive(clientSocket, size).decode()
+        print(dir_listing)
+    elif cmdInput == "quit":
+        clientSocket.send(cmdInput.encode())
+        break
+    else:
+        print("Invalid command")
 
-        size = receive(clientSocket, 10)
-
-        #error testing
-        print(size)
-        print(type(size))
-        print(size.encode())
-        print(int.from_bytes(size.encode(), "big"))
-
-        #line with error
-        print(receive(clientSocket, int.from_bytes(size.encode(), "big")))
-
-    data = clientSocket.recv(1024).decode()
 clientSocket.close()
