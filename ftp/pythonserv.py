@@ -65,8 +65,9 @@ def handle_client_command(data, connectionSocket, serverSocket):
         file_data = parts[2].encode('utf-8')
         put(filename, file_data, connectionSocket)
     elif data == "ls":
-        dir_listing = listDir()
-        connectionSocket.send(bytes(dir_listing, encoding='utf8'))
+        #path = os.getcwd()
+        dir_listing = os.listdir()
+        connectionSocket.send(bytes(str(dir_listing), encoding='utf8'))
     elif data == "quit":
         quit(connectionSocket, serverSocket)
     else:
@@ -77,12 +78,12 @@ while 1:
     # Accept client connection and receive data
     print("Waiting for connection...")
     print("\n")
-    connectionSocket, addr = serverSocket.accept
+    connectionSocket, addr = serverSocket.accept()
     print("Client connected from:",addr)
     print("\n")
     data = connectionSocket.recv(1024).decode()
 
     # Handle client command
-    handle_client_command(data, connectionSocket)
+    handle_client_command(data, connectionSocket, serverSocket)
 
 
