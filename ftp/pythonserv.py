@@ -14,8 +14,6 @@ serverSocket.listen(1) #Max num of clients
 print("Server is ready to receive on port", serverPort)
 
 
-
-
 def receive(socket, numBytes):
     data = ''
     tmpBuff = ''
@@ -54,6 +52,7 @@ def quit(connectionSocket, serverSocket):
     serverSocket.close()
     print("Server shutting down...")
     sys.exit(0)
+ 
 
 # Handle client commands
 def handle_client_command(data, connectionSocket, serverSocket):
