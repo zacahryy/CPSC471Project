@@ -31,7 +31,7 @@ def receive(socket, numBytes):
 # Function to handle file downloads (GET command)
 def get(filename, connectionSocket):
     try:
-        with open(filename, 'rb') as file:
+        with open(filename, 'r') as file:
             data = file.read()
             connectionSocket.sendall(data)
     except FileNotFoundError:
@@ -40,7 +40,7 @@ def get(filename, connectionSocket):
 # Function to handle file uploads (PUT command)
 def put(filename, data, connectionSocket):
     try:
-        with open(filename, 'wb') as file:
+        with open(filename, 'w') as file:
             file.write(data)
             connectionSocket.send(b"File uploaded successfully")
     except Exception as e:
