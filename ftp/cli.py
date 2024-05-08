@@ -25,13 +25,19 @@ file_name = sys.argv[3]
 
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientSocket.connect((serverName, int(serverPort)))
+     while True:
+        command = input('ftp> (e.g., GET filename, PUT filename, ls, quit): ')
+        if command.lower() == 'quit':
+            clientSocket.sendall(command.encode())
+            break
+
+        download_file(clientSocket, command)
+
 
 while 1:
-    cmdInput = input("ftp> ")
-    clientSocket.sendall(cmdInput.encode())
     if 
         clientSocket2 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        clientSocket2.connect((HOST,int(Data)))
+        clientSocket2.connect((serverName,int(Data)))
         size_data = receive(clientSocket, 10)  # Receive size of directory listing
         
         # Convert size_data to integer
