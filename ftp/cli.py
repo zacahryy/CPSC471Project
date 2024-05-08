@@ -20,7 +20,8 @@ def receive(socket, numBytes):
     return data
 
 serverName = sys.argv[1]
-serverPort = sys.argv[2]
+serverPort = int(sys.argv[2])
+file_name = sys.argv[3]
 
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName, int(serverPort)))
