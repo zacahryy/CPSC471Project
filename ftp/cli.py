@@ -23,15 +23,15 @@ serverName = sys.argv[1]
 serverPort = int(sys.argv[2])
 file_name = sys.argv[3]
 
-clientSocket = socket(AF_INET, SOCK_STREAM)
+clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientSocket.connect((serverName, int(serverPort)))
 
 while 1:
     cmdInput = input("ftp> ")
-
-    if cmdInput.startswith('ls'):
-        clientSocket.send('ls'.encode())
-        
+    clientSocket.sendall(cmdInput.encode())
+    if 
+        clientSocket2 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        clientSocket2.connect((HOST,int(Data)))
         size_data = receive(clientSocket, 10)  # Receive size of directory listing
         
         # Convert size_data to integer
