@@ -2,7 +2,6 @@
 from socket import *
 import sys
 import os
-import random
 
 #Get port num
 serverPort = int(sys.argv[1])
