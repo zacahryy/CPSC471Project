@@ -1,32 +1,42 @@
-#CLIENT CODE
 from socket import *
-import sys
-import os
 
-try:
-  serverName = input (" Enter the server name:")
-    serverPort = input ("Enter the server port:")
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-    client.connect((serverNameT, serverPort)) #Connect to the server running on localhost
-    
-while True:
-       
+def main():
+    # Server details
+    serverName = 'localhost'
+    serverPort = int(input("Enter server port: "))
 
-    if 
-        clientSocket2 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        clientSocket2.connect((serverName,int(Data)))
-        size_data = receive(clientSocket, 10)  # Receive size of directory listing
-        
-        # Convert size_data to integer
-        size = int(size_data.decode().strip())
-        
-        # Receive and print the directory listing
-        dir_listing = receive(clientSocket, size).decode()
-        print(dir_listing)
-    elif cmdInput == "quit":
-        clientSocket.send(cmdInput.encode())
-        break
-    else:
-        print("Invalid command")
+    # Create socket
+    clientSocket = socket(AF_INET, SOCK_STREAM)
+    clientSocket.connect((serverName, serverPort))
 
-clientSocket.close()
+    while True:
+        # Get user command
+        command = input("ftp> ")
+
+        # Send command to server
+        clientSocket.send(command.encode())
+
+        # Receive response from server
+        response = clientSocket.recv(1024)
+
+        # Handle server response based on command
+        if command.startswith("GET ") and not response.startswith(b"File not found"):
+            filename = command.split()[1]
+            with open(filename, 'wb') as file:
+                file.write(response)
+                print("File", filename, "downloaded successfully")
+        elif command.startswith("PUT ") and response.startswith(b"File uploaded successfully"):
+            print("File uploaded successfully")
+        elif command == "ls":
+            print(response.decode())
+        elif command == "quit":
+            print("Quitting FTP client")
+            break
+        else:
+            print(response.decode())
+
+    # Close the socket
+    clientSocket.close()
+
+if __name__ == "__main__":
+    main()
