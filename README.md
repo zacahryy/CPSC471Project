@@ -12,8 +12,8 @@ ftp> ls(lists files on theserver)
 ftp> quit (disconnects from the server and exits)
 
 # Server.py
-pythonserv.py <PORTNUMBER>
+pythonserv.py "<PORTNUMBER>"
 
-<PORTNUMBER> specifies theport at which ftp server accepts connection requests.
+"<PORTNUMBER>" specifies the port at which ftp server accepts connection requests.
 
 For example: python serv.py 1234
