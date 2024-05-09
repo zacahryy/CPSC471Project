@@ -17,6 +17,8 @@ Karson Lant &nbsp;&nbsp;&nbsp;&nbsp;Karson@csu.fullerton.edu
 
 Zachary Faulkner &nbsp;&nbsp;&nbsp;&nbsp;zachfaulkner02@gmail.com
 
+Patrick Valera &nbsp;&nbsp;&nbsp;&nbsp;patrickv@csu.fullerton.edu
+
 ## Goals
 + **To understand** the challenges of protocol design.
 + **To discover and appreciate** the challenges of developing complex, real-world network applications.
