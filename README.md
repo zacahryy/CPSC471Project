@@ -1,5 +1,5 @@
 # FTP Client & Server Python Socket Programming
-Programming Language: python 
+**Programming Language:** Python 
 
 FTP(File Transfer Protocol), serves as a network protocol within the TCP/IP suite for facilitating file transfers between computers. It operates at the application layer of the TCP/IP stack.
 
