@@ -1,6 +1,10 @@
 # FTP Client & Server Python Socket Programming
-
-# Client.py
+Programming Language: python 
+### Group members
+Gina Lee                 ginnaaleee@gmail.com
+Karson Lant                
+Zachary Faulkner         zachfaulkner02@gmail.com
+## Client.py
 Upon connecting to the server, the client prints out ftp>, which allows the user to execute the following commands:
 
         ftp> get <file name> (downloads file <file name> from the server) 
@@ -11,7 +15,7 @@ Upon connecting to the server, the client prints out ftp>, which allows the user
 
         ftp> quit (disconnects from the server and exits)
 
-# Server.py
+## Server.py
         pythonserv.py <PORTNUMBER>
 
         <PORTNUMBER> specifies the port at which ftp server accepts connection requests.
