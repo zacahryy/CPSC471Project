@@ -2,7 +2,9 @@
 Programming Language: python 
 ### Group members
 Gina Lee                 ginnaaleee@gmail.com
-Karson Lant                
+
+Karson Lant               
+
 Zachary Faulkner         zachfaulkner02@gmail.com
 ## Client.py
 Upon connecting to the server, the client prints out ftp>, which allows the user to execute the following commands:
