@@ -31,9 +31,9 @@ To execute and run the server and client, call the appropriate program from the 
 
 Run pythonserver.py in a terminal to start the server.
        
-        python3 pythonserver.py 
+        python3 pythonserv.py 
         
-        python pythonserver.py (for windows)
+        python pythonserv.py (for windows)
 Run python cli.py in another terminal to start the client.
      
         python3 cli.py
@@ -67,3 +67,5 @@ The server facilitate file transfers over the internet. Uploading involves trans
         <PORTNUMBER> specifies the port at which ftp server accepts connection requests.
 
 **For example:** pythonserv.py 1234
+
+## Protocol Design
