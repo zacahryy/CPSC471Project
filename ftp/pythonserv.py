@@ -36,9 +36,11 @@ def receive(socket, numBytes):
 # Function to handle file downloads (GET command)
 def get(filename, connectionSocket):
     try:
-        with open(filename, 'r') as file:
+        print("Opening file:", filename)  # Debugging statement
+        with open(filename, 'rb') as file:  # Open file in binary mode
             data = file.read()
-            connectionSocket.sendall(data.encode())
+            print("File content:", data)  # Debugging statement
+            connectionSocket.sendall(data)
     except FileNotFoundError:
         connectionSocket.send(b"File not found")
 
