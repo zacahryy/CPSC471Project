@@ -61,4 +61,4 @@ Upon successfully connecting to the server, the client prints out ftp>, which al
 
         <PORTNUMBER> specifies the port at which ftp server accepts connection requests.
 
-For example: pythonserv.py 1234
+**For example:** pythonserv.py 1234
