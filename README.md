@@ -1,16 +1,24 @@
 # FTP Client & Server Python Socket Programming
 Programming Language: python 
 ### Group members
-Gina Lee &nbsp;&nbsp;&nbsp;&nbsp; ginnaaleee@gmail.com
+Gina Lee &nbsp;&nbsp;&nbsp;&nbsp; ginnaaleee@csu.fullerton.edu
 
-Karson Lant               
+Karson Lant &nbsp;&nbsp;&nbsp;&nbsp;Karson@csu.fullerton.edu              
+
+Zachary Faulkner &nbsp;&nbsp;&nbsp;&nbsp;zachfaulkner02@gmail.com
 
 ## Execute program
 To execute and run the server and client, call the appropriate program from the terminal. 
 
+Run python server.py in a terminal to start the server.
+                                python3 pythonserver.py
+Run python client.py in another terminal to start the client.
+Use commands like GET filename, PUT filename, ls, and quit  in the client to interact with the server and perform file transfers.
+
 
 Zachary Faulkner &nbsp;&nbsp;&nbsp;&nbsp;zachfaulkner02@gmail.com
-## Client.py
+## Client.py 
+
 Upon connecting to the server, the client prints out ftp>, which allows the user to execute the following commands:
 
         ftp> get <file name> (downloads file <file name> from the server) 
