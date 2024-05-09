@@ -58,7 +58,7 @@ Upon successfully connecting to the server, the client prints out ftp>, which al
 
 ## Server.py
 
-Servers facilitate file transfers over the internet. Uploading involves transferring files from a client to the server while,downloading involves transferring files from the server to the client. 
+The server facilitate file transfers over the internet. Uploading involves transferring files from a client to the server while,downloading involves transferring files from the server to the client. 
 
         pythonserv.py <PORTNUMBER>
 
