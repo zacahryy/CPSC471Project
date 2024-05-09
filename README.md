@@ -57,6 +57,9 @@ Upon successfully connecting to the server, the client prints out ftp>, which al
         ftp> quit (disconnects from the server and exits)
 
 ## Server.py
+
+Servers facilitate file transfers over the internet. Uploading involves transferring files from a client to the server while,downloading involves transferring files from the server to the client. 
+
         pythonserv.py <PORTNUMBER>
 
         <PORTNUMBER> specifies the port at which ftp server accepts connection requests.
