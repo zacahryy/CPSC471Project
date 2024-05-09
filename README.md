@@ -10,16 +10,26 @@ Zachary Faulkner &nbsp;&nbsp;&nbsp;&nbsp;zachfaulkner02@gmail.com
 ## Execute program
 To execute and run the server and client, call the appropriate program from the terminal. 
 
-Run python server.py in a terminal to start the server.
-                                python3 pythonserver.py
-Run python client.py in another terminal to start the client.
-Use commands like GET filename, PUT filename, ls, and quit  in the client to interact with the server and perform file transfers.
+Run pythonserver.py in a terminal to start the server.
+       
+        python3 pythonserver.py 
+        
+        python pythonserver.py (for windows)
+Run python cli.py in another terminal to start the client.
+     
+        python3 cli.py
+        
+        python cli.py (for windows)
 
+The client will then ask to
+      
+        Enter server port:
 
-Zachary Faulkner &nbsp;&nbsp;&nbsp;&nbsp;zachfaulkner02@gmail.com
+The client will then attempt a connection to the server.
+
 ## Client.py 
 
-Upon connecting to the server, the client prints out ftp>, which allows the user to execute the following commands:
+Upon successfully connecting to the server, the client prints out ftp>, which allows the user to execute the following commands:
 
         ftp> get <file name> (downloads file <file name> from the server) 
 
