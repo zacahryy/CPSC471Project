@@ -7,7 +7,7 @@ FTP(File Transfer Protocol), serves as a network protocol within the TCP/IP suit
 During an FTP session, the user's device/computer acts as the local host, while the server serves as the remote host.For successful FTP operations, both the local host and the remote host must be connected via a network and correctly configured.
 
 
-To enable FTP, servers are configured to provide FTP services, allowing clients to establish connections and transfer files. On the client side, FTP software is essential, enabling users to interact with these services by uploading (putting) files to the server or downloading (getting) files from the server using specific FTP commands
+To enable FTP, servers are configured to provide FTP services, allowing clients to establish connections and transfer files. On the client side, FTP software is essential, enabling users to interact with these services by uploading (PUT) files to the server or downloading (GET) files from the server using specific FTP commands
 
 
 ### Group members
