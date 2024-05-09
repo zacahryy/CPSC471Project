@@ -17,6 +17,13 @@ Karson Lant &nbsp;&nbsp;&nbsp;&nbsp;Karson@csu.fullerton.edu
 
 Zachary Faulkner &nbsp;&nbsp;&nbsp;&nbsp;zachfaulkner02@gmail.com
 
+## Goals
++ **To understand** the challenges of protocol design.
++ **To discover and appreciate** the challenges of developing complex, real-world network applications.
++ **Make sense of** real-world sockets programming APIs.
++ **To utilize** a sockets programming API to construct simplified FTP server and client
+applications.
+
 ## Execute program
 To execute and run the server and client, call the appropriate program from the terminal. 
 
