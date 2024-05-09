@@ -37,20 +37,29 @@ def receive(socket, numBytes):
 def get(filename, connectionSocket):
     try:
         print("Opening file:", filename)  # Debugging statement
-        with open(filename, 'rb') as file:  # Open file in binary mode
+        with open(f"server_files/{filename}", 'rb') as file:  # Open file in binary mode
             data = file.read()
             print("File content:", data)  # Debugging statement
             connectionSocket.sendall(data)
     except FileNotFoundError:
+        print("File does not exist")
         connectionSocket.send(b"File not found")
 
 
 # Function to handle file uploads (PUT command)
-def put(filename, data, connectionSocket):
+def put(filename, connectionSocket):
     try:
-        with open(filename, 'w') as file:
-            file.write(data)
-            connectionSocket.send(b"File uploaded successfully")
+        with open(f'server_files/{filename}', "wb") as f:
+            while True:
+                chunk = connectionSocket.recv(40)
+                print(".")
+                if not chunk:
+                    break
+                f.write(chunk)
+                break
+        connectionSocket.send(b"File uploaded successfully")
+        print(f"Received file: {filename}")
+
     except Exception as e:
         connectionSocket.send(bytes(str(e), encoding='utf8'))
 
@@ -64,24 +73,26 @@ def quit(connectionSocket, serverSocket):
 
 
 # Handle client commands
-def handle_client_command(data, connectionSocket, serverSocket):
+def handle_client_command(connectionSocket, serverSocket):
+    data = connectionSocket.recv(1024).decode()
+
     print("Received command from client:", data)
     # command, *args = data.split()  # Split the received data into command and arguments
     command = data.split()[0]
     args = [] if len(data)==1 else data.split()[1:]
-    print("args: ")
-    print(args)
-    # print("after split: command=", command)
-    # print("after split: arg0=", args[0])
+    # print("args: ")
+    # print(args)
+
     if command == "GET":
         filename = args[0]
         get(filename, connectionSocket)
+
     elif command == "PUT":
         filename = args[0]
-        file_data = args[1]
-        put(filename, file_data, connectionSocket)
+        put(filename,connectionSocket)
+
     elif command == "ls":
-        dir_listing = os.listdir('.')
+        dir_listing = os.listdir('server_files')
         files_str = "\n".join(dir_listing)
         connectionSocket.send(bytes(str(files_str), encoding='utf8'))
     elif command == "quit":
@@ -90,10 +101,8 @@ def handle_client_command(data, connectionSocket, serverSocket):
         connectionSocket.send(b"Invalid command")
 
 
+
 # Inside your while loop where you handle client connections
 while 1:
-    # Receive data
-    data = connectionSocket.recv(1024).decode()
-
     # Handle client command
-    handle_client_command(data, connectionSocket, serverSocket)
+    handle_client_command(connectionSocket, serverSocket)
