@@ -21,6 +21,7 @@ def main():
 
         # Handle server response based on command
         if command.startswith("GET") and not response.startswith(b"File not found"):
+            print("Received response from server:", response)
             filename = command.split()[1]
             with open(filename, 'wb') as file:
                 file.write(response)
