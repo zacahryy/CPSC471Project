@@ -29,7 +29,10 @@ def main():
         elif command.startswith("PUT") and response.startswith(b"File uploaded successfully"):
             print("File uploaded successfully")
         elif command == "ls":
-            print(response.decode())
+            print("===== SERVER FILES ====")
+            files = response.decode()
+            print(files)
+            print("=======================")
         elif command == "quit":
             print("Quitting FTP client")
             break

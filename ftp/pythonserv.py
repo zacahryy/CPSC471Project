@@ -66,9 +66,13 @@ def quit(connectionSocket, serverSocket):
 # Handle client commands
 def handle_client_command(data, connectionSocket, serverSocket):
     print("Received command from client:", data)
-    command, *args = data.split()  # Split the received data into command and arguments
-    print("after split: command=", command)
-    print("after split: arg0=", args[0])
+    # command, *args = data.split()  # Split the received data into command and arguments
+    command = data.split()[0]
+    args = [] if len(data)==1 else data.split()[1:]
+    print("args: ")
+    print(args)
+    # print("after split: command=", command)
+    # print("after split: arg0=", args[0])
     if command == "GET":
         filename = args[0]
         get(filename, connectionSocket)
@@ -77,8 +81,9 @@ def handle_client_command(data, connectionSocket, serverSocket):
         file_data = args[1]
         put(filename, file_data, connectionSocket)
     elif command == "ls":
-        dir_listing = os.listdir()
-        connectionSocket.send(bytes(str(dir_listing), encoding='utf8'))
+        dir_listing = os.listdir('.')
+        files_str = "\n".join(dir_listing)
+        connectionSocket.send(bytes(str(files_str), encoding='utf8'))
     elif command == "quit":
         quit(connectionSocket, serverSocket)
     else:
